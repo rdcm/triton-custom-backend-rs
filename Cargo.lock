@@ -962,6 +962,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "triton-client"
+version = "0.1.0"
+dependencies = [
+ "anyhow",
+ "tonic",
+ "triton-grpc-client",
+]
+
+[[package]]
 name = "triton-grpc-client"
 version = "0.1.0"
 dependencies = [

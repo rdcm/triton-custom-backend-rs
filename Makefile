@@ -4,6 +4,9 @@ docker-env-up:
 docker-env-down:
 	docker compose down
 
+docker-env-clean:
+	docker compose down -v
+
 format:
 	cargo fmt
 

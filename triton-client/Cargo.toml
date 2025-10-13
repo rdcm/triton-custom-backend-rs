@@ -1,0 +1,9 @@
+[package]
+name = "triton-client"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = { workspace = true }
+triton-grpc-client = { workspace = true }
+tonic = { workspace = true }
