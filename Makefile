@@ -7,9 +7,8 @@ docker-env-down:
 format:
 	cargo fmt
 
-build:
-	cargo build --release
-	mv target/release/libtriton_custom_backend.so backends/custom_backend/libtriton_custom_backend.so
+lint:
+	cargo clippy
 
 logs:
 	docker logs triton
@@ -17,9 +16,8 @@ logs:
 update-submodules:
 	git submodule update --remote
 
+gen-grpc-client:
+	cargo build --manifest-path=triton-grpc-client/Cargo.toml --release
 
-run:
-	# https://github.com/triton-inference-server/common/tree/main/protobuf
-	cargo build --manifest-path=triton-client/Cargo.toml --release
+build-debug:
 	cargo build --workspace
-	cargo run ./target/debug/app
