@@ -1,0 +1,8 @@
+[submodule "deps/triton-common"]
+	path = deps/triton-common
+	url = https://github.com/triton-inference-server/common.git
+	branch = main
+[submodule "deps/triton-core"]
+	path = deps/triton-core
+	url = https://github.com/triton-inference-server/core.git
+	branch = main

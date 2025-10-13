@@ -1,0 +1,27 @@
+services:
+  triton:
+    image: nvcr.io/nvidia/tritonserver:23.10-py3
+    container_name: triton
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    shm_size: "1g"
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    command: >
+      tritonserver
+      --model-repository=/models
+      --log-verbose=1
+    volumes:
+      - ./models:/models
+      - ./backends/custom_backend:/opt/tritonserver/backends/custom_backend
+    ports:
+      - "8000:8000" # HTTP
+      - "8001:8001" # gRPC
+      - "8002:8002" # metrics (Prometheus)
