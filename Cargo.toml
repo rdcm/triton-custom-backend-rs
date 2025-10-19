@@ -3,14 +3,14 @@ resolver = "2"
 members = [
     "example/app",
     "example/custom-backend",
-    "triton-rs",
+    "triton-ng",
     "triton-sys",
     "triton-client",
     "triton-grpc-client",
 ]
 
 [workspace.dependencies]
-triton-rs = { path = "triton-rs", version = "0.1.0" }
+triton-ng = { path = "triton-ng", version = "0.1.0" }
 triton-sys = { path = "triton-sys", version = "0.1.0" }
 triton-client = { path = "triton-client", version = "0.1.0" }
 triton-grpc-client = { path = "triton-grpc-client", version = "0.1.0" }

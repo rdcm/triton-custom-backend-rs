@@ -1,5 +1,5 @@
-use triton_rs::backend::Backend;
-use triton_rs::{InferenceRequest, Response, sys};
+use triton_ng::backend::Backend;
+use triton_ng::{InferenceRequest, Response, sys};
 
 struct MnistBackend;
 
@@ -7,15 +7,15 @@ const MODEL_NAME: &str = "mnist_onnx";
 const MODEL_VERSION: i64 = 1;
 
 impl Backend for MnistBackend {
-    fn initialize() -> Result<(), triton_rs::Error> {
+    fn initialize() -> Result<(), triton_ng::Error> {
         println!("[MNIST] initialize");
         Ok(())
     }
 
     fn model_instance_execute(
-        model: triton_rs::Model,
-        requests: &[triton_rs::Request],
-    ) -> Result<(), triton_rs::Error> {
+        model: triton_ng::Model,
+        requests: &[triton_ng::Request],
+    ) -> Result<(), triton_ng::Error> {
         println!("[MNIST] model_instance_execute");
 
         let server = model.get_server()?;
@@ -80,4 +80,4 @@ impl Backend for MnistBackend {
     }
 }
 
-triton_rs::declare_backend!(MnistBackend);
+triton_ng::declare_backend!(MnistBackend);

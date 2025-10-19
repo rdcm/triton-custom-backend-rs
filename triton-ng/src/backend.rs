@@ -63,8 +63,8 @@ macro_rules! call_checked {
             Err(err) => {
                 let err = std::ffi::CString::new(err.to_string()).expect("CString::new failed");
                 unsafe {
-                    triton_rs::sys::TRITONSERVER_ErrorNew(
-                        triton_rs::sys::TRITONSERVER_errorcode_enum_TRITONSERVER_ERROR_INTERNAL,
+                    triton_ng::sys::TRITONSERVER_ErrorNew(
+                        triton_ng::sys::TRITONSERVER_errorcode_enum_TRITONSERVER_ERROR_INTERNAL,
                         err.as_ptr(),
                     )
                 }
@@ -79,54 +79,54 @@ macro_rules! declare_backend {
     ($class:ident) => {
         #[unsafe(no_mangle)]
         extern "C" fn TRITONBACKEND_Initialize(
-            backend: *const triton_rs::sys::TRITONBACKEND_Backend,
-        ) -> *const triton_rs::sys::TRITONSERVER_Error {
-            triton_rs::call_checked!($class::initialize())
+            backend: *const triton_ng::sys::TRITONBACKEND_Backend,
+        ) -> *const triton_ng::sys::TRITONSERVER_Error {
+            triton_ng::call_checked!($class::initialize())
         }
 
         #[unsafe(no_mangle)]
         extern "C" fn TRITONBACKEND_Finalize(
-            backend: *const triton_rs::sys::TRITONBACKEND_Backend,
-        ) -> *const triton_rs::sys::TRITONSERVER_Error {
-            triton_rs::call_checked!($class::finalize())
+            backend: *const triton_ng::sys::TRITONBACKEND_Backend,
+        ) -> *const triton_ng::sys::TRITONSERVER_Error {
+            triton_ng::call_checked!($class::finalize())
         }
 
         #[unsafe(no_mangle)]
         extern "C" fn TRITONBACKEND_ModelInstanceInitialize(
-            instance: *mut triton_rs::sys::TRITONBACKEND_ModelInstance,
-        ) -> *const triton_rs::sys::TRITONSERVER_Error {
-            triton_rs::call_checked!($class::model_instance_initialize())
+            instance: *mut triton_ng::sys::TRITONBACKEND_ModelInstance,
+        ) -> *const triton_ng::sys::TRITONSERVER_Error {
+            triton_ng::call_checked!($class::model_instance_initialize())
         }
 
         #[unsafe(no_mangle)]
         extern "C" fn TRITONBACKEND_ModelInstanceFinalize(
-            instance: *const triton_rs::sys::TRITONBACKEND_ModelInstance,
-        ) -> *const triton_rs::sys::TRITONSERVER_Error {
-            triton_rs::call_checked!($class::model_instance_finalize())
+            instance: *const triton_ng::sys::TRITONBACKEND_ModelInstance,
+        ) -> *const triton_ng::sys::TRITONSERVER_Error {
+            triton_ng::call_checked!($class::model_instance_finalize())
         }
 
         #[unsafe(no_mangle)]
         extern "C" fn TRITONBACKEND_ModelInstanceExecute(
-            instance: *mut triton_rs::sys::TRITONBACKEND_ModelInstance,
-            requests: *const *mut triton_rs::sys::TRITONBACKEND_Request,
+            instance: *mut triton_ng::sys::TRITONBACKEND_ModelInstance,
+            requests: *const *mut triton_ng::sys::TRITONBACKEND_Request,
             request_count: u32,
-        ) -> *const triton_rs::sys::TRITONSERVER_Error {
-            let mut model: *mut triton_rs::sys::TRITONBACKEND_Model = std::ptr::null_mut();
+        ) -> *const triton_ng::sys::TRITONSERVER_Error {
+            let mut model: *mut triton_ng::sys::TRITONBACKEND_Model = std::ptr::null_mut();
             let err =
-                unsafe { triton_rs::sys::TRITONBACKEND_ModelInstanceModel(instance, &mut model) };
+                unsafe { triton_ng::sys::TRITONBACKEND_ModelInstanceModel(instance, &mut model) };
             if !err.is_null() {
                 return err;
             }
 
-            let model = triton_rs::Model::from_ptr(model);
+            let model = triton_ng::Model::from_ptr(model);
 
             let requests = unsafe { std::slice::from_raw_parts(requests, request_count as usize) };
             let requests = requests
                 .iter()
-                .map(|req| triton_rs::Request::from_ptr(*req))
-                .collect::<Vec<triton_rs::Request>>();
+                .map(|req| triton_ng::Request::from_ptr(*req))
+                .collect::<Vec<triton_ng::Request>>();
 
-            triton_rs::call_checked!($class::model_instance_execute(model, &requests))
+            triton_ng::call_checked!($class::model_instance_execute(model, &requests))
         }
     };
 }
