@@ -1,6 +1,6 @@
 services:
   triton:
-    image: nvcr.io/nvidia/tritonserver:23.10-py3
+    image: nvcr.io/nvidia/tritonserver:25.09-py3
     container_name: triton
     restart: unless-stopped
     deploy:

@@ -1,0 +1,10 @@
+[package]
+name = "triton-rs"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+libc = { workspace = true }
+byteorder = { workspace = true }
+crossbeam = { workspace = true }
+triton-sys = { workspace = true }

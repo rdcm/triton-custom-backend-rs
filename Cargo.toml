@@ -1,18 +1,28 @@
 [workspace]
 resolver = "2"
 members = [
+    "example/app",
+    "example/custom-backend",
+    "triton-rs",
     "triton-sys",
     "triton-client",
     "triton-grpc-client",
 ]
 
 [workspace.dependencies]
+triton-rs = { path = "triton-rs", version = "0.1.0" }
 triton-sys = { path = "triton-sys", version = "0.1.0" }
 triton-client = { path = "triton-client", version = "0.1.0" }
 triton-grpc-client = { path = "triton-grpc-client", version = "0.1.0" }
+custom-backend = { path = "example/custom-backend", version = "0.1.0" }
+app = { path = "example/app", version = "0.1.0" }
 anyhow = { version = "1.0.100" }
-bindgen = "0.72.1"
+byteorder = { version = "1.5.0" }
+bindgen = { version = "0.72.1" }
+crossbeam = { version = "0.8.4" }
+libc = { version = "0.2.177" }
 prost = { version = "0.14.1" }
 tonic = { version = "0.14.2", features = ["gzip"] }
 tonic-prost = { version = "0.14.2" }
 tonic-prost-build = { version = "0.14.2" }
+tokio = { version = "1.48.0", features = ["full"] }
